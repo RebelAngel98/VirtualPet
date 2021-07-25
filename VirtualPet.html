@@ -1,0 +1,187 @@
+<html>
+<head>
+    <title>Virtually Annoying Pet</title>
+    <script>
+        // Virtual Pet Stats and starting values
+        var petName = "Lassie";
+        var currentHealth = 60;
+        var maxHealth = 100;
+        var petStatus = "Healthy";
+        var meSleepy = 60;
+        var maxSleep = 100;
+        var feedMe = 60;
+        var maxFeed = 100;
+
+        //modified all the variables so they fit the needs
+
+
+
+        // Increases the current health of the Virtual Pet until it is maxed out.
+        function exercise()
+        {
+            currentHealth = currentHealth + 5;
+            if(currentHealth  > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+
+            // Update the display after an action has occurred.
+            updateDisplay();
+        }
+        function Sleep()
+        {
+            meSleepy = maxSleep + 5;
+            if(meSleepy  > maxSleep)
+            {
+                meSleepy = maxSleep;
+            }
+
+            // Update the display after an action has occurred.
+            updateDisplay();
+            //wrote both function and variable buttons for hunger and sleep
+        }
+
+        function Feed()
+        {
+            feedMe = maxFeed + 5;
+            if(feedMe > maxFeed)
+            {
+                feedMe = maxFeed;
+            }
+
+            // Update the display after an action has occurred.
+            //both functions completely hit 100 once you click on them. I'm not complaining, just annoying!!!
+            //Made it so they were all the same, yes I know...boring, but I did it so it would keep track of the stats
+            updateDisplay();
+        }
+
+
+
+
+
+
+
+        // Modifies any stats that automatically change every few seconds.
+        //    (For example, health decreases every few seconds so the play needs to occasionally exercise their Virtual Pet)
+        function changesOverTime()
+        {
+            currentHealth = currentHealth - 4;
+            meSleepy = meSleepy - 4;
+            feedMe = feedMe - 4;
+            //worked on all of that! Yay now I have a stable thing to work with.
+        }
+
+
+        // Checks the pet's health and modifies the status accordingly
+        function checkHealth()
+        {
+            if(currentHealth <= 0 )
+            {
+                petStatus = "Dead";
+                currentHealth = 0;
+            }
+            if(currentHealth <= 20 )
+            {
+                petStatus = "Very Ill";
+                currentHealth = 20;
+                feedMe = 20;
+                meSleepy = 20;
+                //added a sickness button...we'll see how it goes!
+                //tried to make it so all of the stats goes to make it Very Sick
+            }
+        }
+
+
+
+        // Displays a Title to the screen for your Virtual Pet game
+        function displayTitle()
+        {
+            //created a title (or tried too)
+            //never found out how to get the title to work...damn...
+
+        }
+
+
+        // Displays the current pet stats to the screen.
+        function displayPetStats()
+        {
+            document.write("<h2>" + petName + " Status: " + petStatus + "</h2>");
+            document.write("<p>Health = " + currentHealth + "&nbsp;&nbsp;&nbsp;Max Health = " + maxHealth + "</p>");
+            document.write("<p>Sleep = " + meSleepy + "&nbsp;&nbsp;&nbsp; Sleep = " + maxSleep + "</p>");
+            document.write("<p>Feed = " + feedMe + "&nbsp;&nbsp;&nbsp;Fed Properly = " + maxFeed + "</p>");
+            //added all the necessary buttons
+            //what else does a dog do!!!
+
+            document.close();
+        }
+
+
+        // Displays the buttons to the screen enabling the user to interact with their virtual pet.
+        function displayUserOptions()
+        {
+            if(petStatus != "Dead")
+            {
+                document.write("<button onclick='exercise()'>Exercise</button>");
+                document.write("<button onclick='Sleep()'>Sleep</button>");
+                document.write("<button onclick='Feed()'>Feed</button>");
+                //Sleep and Feed is completed! YASS! I'm happy
+                //Bare minimal is done for the project as of right now!
+                //Katie...you need to chill.
+            }
+        }
+
+
+        // Calls all the functions that display information to the screen.
+        function updateDisplay()
+        {
+            displayTitle();
+            displayUserOptions();
+            displayPetStats();
+
+        }
+
+
+        // This function executes the game and manages the passing of time.
+        function gameLoop(timestamp)
+        {
+            if(timestamp > last_iteration + time_interval)
+            {
+                last_iteration = timestamp;
+
+                changesOverTime();
+                checkHealth();
+
+                // TODO: Check other Virtual Pet stats and update the petStatus accordingly
+
+
+
+
+                // After all stats updates are done, update/recreate the display
+                updateDisplay();
+            }
+
+
+
+            // Life continues unless the Virtual Pet is dead (health <= 0)
+            if(petStatus != "Dead")
+            {
+                // Executes the gameLoop function once again.
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        // Other global variables that control the timing of the game.
+        //DO NOT TOUCH THE TIME INTERVAL!!! HOLY CRAP!
+        //This is the fastest I've ever killed a dog! -Literally .5 seconds-
+        //GG Katie, you did it, you killed a dog within .5 seconds of living.
+        var time_interval = 5000;
+        var last_iteration = 0;
+    </script>
+</head>
+
+<body>
+<h1>Lassie's Adventure</h1>
+<!-- Initiate the gameLoop for the first time.-->
+<button onclick='gameLoop()'>Bring Lassie to Life!</button>
+</body>
+</html>
